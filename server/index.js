@@ -1,6 +1,8 @@
 const express = require('express');
 const requestId = require('express-request-id')();
+
 const logger = require('./config/logger');
+const api = require('./api');
 
 const app = express();
 
@@ -8,9 +10,8 @@ const app = express();
 app.use(requestId);
 app.use(logger.requests);
 
-app.get('/', (req, res, next) => {
-  res.json({ message: 'Welcome to the API' });
-});
+// Setup router and routes
+app.use('/api', api);
 
 // No route found handler
 app.use((req, res, next) => {
